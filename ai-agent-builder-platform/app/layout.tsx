@@ -4,6 +4,7 @@ import "./globals.css";
 import { Outfit } from "next/font/google";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import {ClerkProvider} from '@clerk/nextjs'
+import Provider from "./provider";
 
 export const metadata: Metadata = {
   title: "AI Agent Builder Platform",
@@ -23,7 +24,11 @@ export default function RootLayout({
         <body
           className={outfit.className}
         >
-          <ConvexClientProvider>{children}</ConvexClientProvider>
+          <ConvexClientProvider>
+            <Provider>
+              {children}
+            </Provider>
+          </ConvexClientProvider>
         </body>
       </html>
     </ClerkProvider>
