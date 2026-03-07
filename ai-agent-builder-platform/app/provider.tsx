@@ -7,28 +7,29 @@ import { UserDetailContext } from '@/context/UserDetailContext';
 
 function Provider({
     children,
-}:Readonly<{
+}: Readonly<{
     children: React.ReactNode;
-}>){
-    const {user} =useUser();
-    const createUser=useMutation(api.user.CreateNewUser);
+}>) {
+    const { user } = useUser();
+    const createUser = useMutation(api.user.CreateNewUser);
     const [userDetails, setUserDetails] = useState<any>();
 
-    useEffect(()=>{
+    useEffect(() => {
         user && CreateAndGetUser();
-    },[user]);
-    const CreateAndGetUser=async()=>{
-        if (user){
-            const result=await createUser({
-                name:user.fullName??'',
-                email:user.primaryEmailAddress?.emailAddress??''
+    }, [user]);
+    
+    const CreateAndGetUser = async () => {
+        if (user) {
+            const result = await createUser({
+                name: user.fullName ?? '',
+                email: user.primaryEmailAddress?.emailAddress ?? ''
             });
-            console.log("User created or fetched:",result);
+            console.log("User created or fetched:", result);
             setUserDetails(result);
         }
     }
-    return(
-        <UserDetailContext.Provider value={{userDetails, setUserDetails}}>
+    return (
+        <UserDetailContext.Provider value={{ userDetails, setUserDetails }}>
             <div>{children}</div>
         </UserDetailContext.Provider>
     )
